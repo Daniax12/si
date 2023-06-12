@@ -1,0 +1,48 @@
+create database comptabilite;
+
+create table company(
+    nom_company varchar(50),
+    capital numeric(20),
+    activite text,
+    nif varchar(50),
+    stat varchar(50),
+    date_creation date,
+    tel varchar(50),
+    email varchar(50),
+    adresse varchar(100)
+);
+
+insert into company values('DIMPEX', 10000000, 'Production articles industriels et la vente de marchandises auprès de ces clients locaux et étrangers', '123456', 'STAT456789', '2000-11-12', ' 22 770 99', 'dimpex@gmail.com', 'ENCEINTE ITU ANDOHARANOFOTSY BP 1960 Antananarivo 101');
+
+-- ----------------------------------------------------------------------
+
+CREATE SEQUENCE product_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE;
+
+create table product(
+    id_product varchar(50) primary key,
+    nom_product varchar(50)
+);
+
+insert into product values('PROD' || (SELECT NEXTVAL('product_seq')), 'MAIS');
+ -- ------------------------------------------------------------------------
+
+ CREATE SEQUENCE centre_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE;
+
+create table centre(
+    id_centre varchar(50) primary key,
+    nom_centre varchar(50)
+);
+
+insert into centre values('CENTRE_' || (SELECT NEXTVAL('centre_seq')), 'ADMIN');
+insert into centre values('CENTRE_' || (SELECT NEXTVAL('centre_seq')), 'PLANTATION');
+insert into centre values('CENTRE_' || (SELECT NEXTVAL('centre_seq')), 'USINE');
+
+-- --------------------------------------------------------------------------
