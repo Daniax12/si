@@ -35,7 +35,13 @@ class Company extends CI_Model {
 	 }
 
 	 public function insert_product($nom_product){
-		
+		$query = sprintf("INSERT INTO product VALUES('PROD' || (SELECT NEXTVAL('product_seq')), '%s')", $nom_product);       // Insert objet
+        $sql = $this->db->query($query);
+	 }
+
+	 public function insert_center($nom_centre){
+		$query = sprintf("INSERT INTO centre VALUES('CENTRE_' || (SELECT NEXTVAL('centre_seq')), '%s')", $nom_centre);       // Insert objet
+        $sql = $this->db->query($query);
 	 }
    
 }

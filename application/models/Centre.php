@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Centre extends CI_Model {
 
 	/**
 	 * Index Page for this controller.
@@ -18,11 +18,22 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
-		$data['title_page'] = 'KPI';
-		$data['title'] = 'DIMPEX | KPI';
-		$data['content'] = 'home';
-		$this->load->view('main', $data);	
-	}		
+
+
+
+
+     // REPARTIOTION DES centres
+    public function get_general_repartition(){
+        $query = $this->db->get('v_repartition_centre_charge;');
+        return $query->result();
+    }
+    
+    // tous les centres
+	public function get_centres(){
+        $query = $this->db->get('centre');
+        return $query->result();
+    }
+
+    
+   
 }

@@ -16,7 +16,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#" class="breadcrumb-link"><?php echo $title_page ?> </a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">E-Commerce Dashboard Template</li>
+                                    <li class="breadcrumb-item active" aria-current="page"><?php echo $title_section ?></li>
                                 </ol>
                             </nav>
                         </div>
@@ -127,6 +127,7 @@
             </div>
         </div>
     </div>
+    <!-- INSERTION NOUVEAU PRODUIT // MODAL -->
     <div class="modal fade" id="staticBackdropAddProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -138,10 +139,38 @@
                 </div>
 
                 <div class="modal-body text-center">
-                    <form action = "#" method="GET">
+                    <form action = "Generalite_ctrl/inserer_product" method="POST">
                         <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
                             <label for="inputText1" class="col-form-label"> Nom produit:  </label>
                             <input id="inputText1" type="text" name="product_name" class="form-control" required>
+                        </div>
+                        <input type="submit" value = "Ajouter" class="btn btn-primary">
+                    </form>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- INSERTION NOUVEAU CENTRE // MODAL -->
+     <div class="modal fade" id="staticBackdropAddCentre" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center" id="staticBackdropLabel">
+                        Ajout centre  
+                    </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>  
+                </div>
+
+                <div class="modal-body text-center">
+                    <form action = "Generalite_ctrl/inserer_centre" method="POST">
+                        <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
+                            <label for="inputText1" class="col-form-label"> Nom centre:  </label>
+                            <input id="inputText1" type="text" name="centre_name" class="form-control" required>
                         </div>
                         <input type="submit" value = "Ajouter" class="btn btn-primary">
                     </form>

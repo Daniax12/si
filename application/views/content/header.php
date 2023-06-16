@@ -10,8 +10,8 @@
     <link href="<?php echo base_url() ?>/assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/libs/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/charts/chartist-bundle/chartist.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/charts/morris-bundle/morris.css">
+    <!-- <link rel="stylesheet" href="<?php// echo base_url() ?>/assets/vendor/charts/chartist-bundle/chartist.css"> -->
+    <!-- <link rel="stylesheet" href="<?php// echo base_url() ?>/assets/vendor/charts/morris-bundle/morris.css"> -->
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>/assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
@@ -29,7 +29,7 @@
         <div class="dashboard-header">
             <nav class="navbar bg-white fixed-top">
             	
-                <a class="navbar-brand" href="index.html">Concept</a>
+                <a class="navbar-brand" href="index.html">DIMPEX</a>
                 <a style="margin-right:50px" > Log out </a>
             </nav>
         </div>
@@ -52,7 +52,7 @@
                                 Menu
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link active" href="#" ><i class="fa fa-fw fa-user-circle"></i>
+                                <a class="nav-link" href="<?php echo site_url("index.php/Generalite_ctrl/kpi") ?>" ><i class="fa fa-fw fa-user-circle"></i>
                                     KPI
                                 </a>
                             </li>
@@ -63,60 +63,79 @@
                                 <div id="submenu-5" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="index.php/Generalite_ctrl">Generalites</a>
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Generalite_ctrl/") ?>">Generalites</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/data-tables.html"> Plan de compte </a>
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Compte_ctrl/") ?>"> Plan de compte general</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/data-tables.html"> Tiers </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/data-tables.html"> Code journal </a>
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Tiers_ctrl/") ?>"> Tiers </a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-divider">
-                                Features
+                                Comptabilite
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>Icons</a>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                    Ecriture journal
+                                </a>
                                 <div id="submenu-8" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-fontawesome.html">FontAwesome Icons</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-material.html">Material Icons</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-simple-lineicon.html">Simpleline Icon</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-themify.html">Themify Icon</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-flag.html">Flag Icons</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="pages/icon-weather.html">Weather Icon</a>
-                                        </li>
+                                        <?php 
+                                            foreach($code_journaux as $cj){ ?>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="<?php echo site_url("index.php/Journal_ctrl/ecritures/") ?>/<?php echo $cj -> id_code_journal ?>"> <?php echo $cj -> intitule_code_journal ?>  </a>
+                                                </li>
+                                            <?php } ?>
                                     </ul>
                                 </div>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-9"><i class="fas fa-fw fa-map-marker-alt"></i>Maps</a>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                    General
+                                </a>
                                 <div id="submenu-9" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/map-google.html">Google Maps</a>
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Compte_ctrl/grand_livre_page/") ?>"> 
+                                                Grand livre des comptes
+                                            </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/map-vector.html">Vector Maps</a>
+                                            <a class="nav-link" href=""> 
+                                                Balance
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                    Analytique
+                                </a>
+                                <div id="submenu-10" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Product_ctrl/repartition_charge_product/") ?>"> 
+                                                Par produit
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href=""> 
+                                                Par centre
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="<?php echo site_url("index.php/Facture_ctrl/") ?>" ><i class="fa fa-fw fa-user-circle"></i>
+                                    Facturation
+                                </a>
                             </li>
                         </ul>
                     </div>
