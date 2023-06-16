@@ -74,12 +74,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'dsn'	=> 'pgsql:host=localhost;dbname=comptabilite',
+	'hostname' => '',
 	'username' => 'postgres',
 	'password' => 'mdpProm15',
-	'database' => 'comptabilite',
-	'dbdriver' => 'postgre',
+	'database' => '',
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
