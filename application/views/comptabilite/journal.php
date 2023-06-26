@@ -30,7 +30,7 @@
             <div class="ecommerce-widget">
                 <div class="row" style="padding:1% 1% 1% 1%">
                     <div class="d-flex flex-row">
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdropAddEcriture">
+                        <a data-bs-toggle="modal" style="margin-right: 50px" data-bs-target="#staticBackdropAddEcriture">
                             <button class="btn btn-primary">
                                 + Nouvelle ecriture
                             </button>                              
@@ -44,18 +44,20 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="bg-light">
-                                            <tr class="border-0 text-center">
+                                            <tr class="border-0">
                                                 <th class="border-0">Compte general</th>
                                                 <th class="border-0">Date</th>
                                                 <th class="border-0"> Piece </th>
                                                 <th class="border-0"> Tiers </th>
                                                 <th class="border-0"> Libelle </th>
-                                                <th class="border-0"> Debit </th>
-                                                <th class="border-0"> Credit </th>
+                                                <th class="border-0 text-right"> Debit </th>
+                                                <th class="border-0 text-right"> Credit </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($ecritures as $ecriture){ ?>
+                                            <?php 
+                                            if($ecritures){
+                                                foreach($ecritures as $ecriture){ ?>
                                                 <tr>
                                                     <td><?php echo $ecriture['numero_compte'] ?> - <?php echo $ecriture['intitule'] ?></td>
                                                     <td><?php echo $ecriture['date_insertion']  ?></td>
@@ -65,7 +67,8 @@
                                                     <td class="text-right">Ar  <?php echo $ecriture['debit'] ?></td>
                                                     <td class="text-right">Ar <?php echo $ecriture['credit'] ?></td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php } 
+                                        }?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -89,8 +92,8 @@
                 </div>
 
                 <div class="modal-body text-center">
-                    <form action = "#" method="POST">
-                        <input type="hidden" value="<?php echo $main_code_journal['id_code_journal']  ?>">
+                    <form action = "<?php echo site_url("index.php/Journal_ctrl/insert_new_journal/") ?>" method="POST">
+                        <input type="hidden" name="code_journal" value="<?php echo $main_code_journal['id_code_journal']  ?>">
                         <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
                             <label for="inputText1" > Date journal:  </label>
                             <input id="inputText1" type="date" name="date_journal" class="form-control" required>

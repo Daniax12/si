@@ -1,4 +1,6 @@
 
+
+
 <!-- ============================================================== -->
 <!-- wrapper  -->
 <!-- ============================================================== -->
@@ -43,7 +45,8 @@
                         <div class="d-flex flex-row">
                             <input type="text" id="num_racine" class="form-control text-center" style="width:15%" readonly>
                             <input id="num_racine_value" type="text" name="numero_compte" class="form-control" required>
-                        </div>     
+                        </div>   
+                        <span id="check_numero"></span>  
                     </div>
                     <!-- INTITULE DU COMPTE -->
                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
@@ -332,7 +335,37 @@
             }
         }
 
-
+        // CHECK IF ALREADY IN DB COMPTE
+        const numRacineValue = document.getElementById('num_racine_value');
+       // var start = document.getElementById('num_racine').value;
+        const checkNumero = document.getElementById('check_numero');
+        const arrayData = <?php echo json_encode($numeros); ?>;
+        // Add an event listener for input changes
+        numRacineValue.addEventListener('input', function() {
+            var start = document.getElementById('num_racine').value;
+            const enteredValue = start+numRacineValue.value;
+     //       console.log(enteredValue.length);
+            if (enteredValue.length < 5) {
+                checkNumero.innerHTML = 'Enter at least 4 characters';
+                return;
+            } else if(enteredValue.length > 5){
+                checkNumero.innerHTML = 'Enter at least less than 5 characters';
+                return;
+            }
+            checkNumero.innerHTML = '';
+            let isInDatabase = false;
+            for (let i = 0; i < arrayData.length; i++) {
+                const item = arrayData[i];
+                if (item.hasOwnProperty('numero_compte') && item.numero_compte == enteredValue) {
+                    isInDatabase = true;
+                    break;
+                }
+            }
+            if (isInDatabase) {
+                checkNumero.innerHTML = 'Numero existe deja dans la base donnes';
+                checkNumero.style.color = 'red';
+            } 
+        });
 
          // CHECK THE NUMERO DEBUT GENERAL ACCOMPTE
         // Get references to the select and input elements

@@ -33,8 +33,7 @@
                             <button class="btn btn-primary">
                                 + Ajouter compte
                             </button>                              
-                        </a>
-                    
+                        </a>    
                         <button class="btn btn-primary"> Importer fichier </button>
                     </div>
                 </div>
@@ -45,10 +44,10 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="bg-light">
-                                            <tr class="border-0 text-center">
-                                                <th class="border-0">Numero</th>
-                                                <th class="border-0">Racine compte</th>
-                                                <th class="border-0">Intitule</th>
+                                            <tr class="border-0">
+                                                <th class="border-0 font-weight-bold">Numero</th>
+                                                <th class="border-0 font-weight-bold">Racine compte</th>
+                                                <th class="border-0 font-weight-bold">Intitule</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -68,7 +67,7 @@
                     <!-- ============================================================== -->
                     <div class="col-md-3">
                         <div class="card">
-                            <h5 class="card-header">Racine des comptes</h5>
+                            <h3 class="card-header font-weight-bold">Racine des comptes</h3>
                             <div class="card-body p-0">
                                 <ul class="country-sales list-group list-group-flush">
                                     <?php foreach($racines as $racine){ ?>
@@ -84,7 +83,7 @@
                         </div>
 
                         <div class="card">
-                            <h5 class="card-header">Code journaux</h5>
+                            <h3 class="card-header font-weight-bold"> Code journaux</h3>
                             <div class="card-body p-0">
                                 <ul class="country-sales list-group list-group-flush">
                                     <?php foreach($code_journaux as $code_journal){ ?>

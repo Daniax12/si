@@ -3,65 +3,120 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Compte extends CI_Model {
 
-   // Compte 41
-   // Prendre tous les comptes 6
-   public function get_classe_customer(){
-      $query = sprintf("select * from compte_general where numero_compte like '41%'");
-      $sql = $this->db->query($query);
-      $count = 0;
+   // savoir si compte 6
+   public function is_class_charge($compte){
+      $firstLetter = strtoupper(substr($compte -> numero_compte, 0, 1));
+      if($firstLetter == '6') return true;
+      return false;
+   }
 
-      foreach ($sql-> result_array() as $row){
-          $count++;
-          $result[] = $row; 
+   // Totalite du balance
+   public function total_balance(){
+      $all_balance = $this -> get_balance_comptes();
+
+      if($all_balance){
+         $debit = 0;
+         $credit = 0;
+
+         foreach($all_balance as $balance){
+            $debit += $balance[1];
+            $credit += $balance[2];
+         }
+
+         $result = array();
+         $result[] = $debit;
+         $result[] = $credit;
+
+         return $result;
       }
-      //if($count == 0) return 0;
-      return $result;
-   }  
+   }
+
+   // Prendre tous les comptes dont le tota debit et credit != null
+   public function get_balance_comptes(){
+      $comptes = $this -> get_comptes();
+      $res = array();
+
+      if($comptes){
+         foreach($comptes as $compte){
+            $balance = $this -> get_balance_compte_general($compte -> id_compte_general);
+            if($balance[0] != 0 || $balance[1] != 0){
+               $temp_array = array();
+               $temp_array[] = $compte;
+               $temp_array[] = $balance[0];
+               $temp_array[] = $balance[1];
+
+               $res[] = $temp_array;
+            }
+         }
+         return $res;
+      }
+   }
 
    // Some de tout les charges
    public function get_total_charge(){
       $charges = $this -> get_classe_charge();
       $result = 0;
-      foreach($charges as $charge){
-         $balance = $this -> get_balance_compte_general($charge['id_compte_general']);
-         $result += $balance[0];
+      if($charges){
+         foreach($charges as $charge){
+            $balance = $this -> get_balance_compte_general($charge['id_compte_general']);
+            $result += $balance[0];
+         }
+         return $result;
       }
-      return $result;
    }
 
    // Prendre tous les comptes 6
    public function get_classe_charge(){
-      $query = sprintf("select * from compte_general where numero_compte like '6%'");
+      $query = "select * from compte_general where numero_compte like '6%'";
       $sql = $this->db->query($query);
-      $count = 0;
 
       foreach ($sql-> result_array() as $row){
-          $count++;
           $result[] = $row; 
       }
-      if($count == 0) return 0;
       return $result;
    }
 
+      // Prendre tous les comptes 6
+      public function get_classe_customer(){
+         $query = "select * from tiers where numero_tiers like '411%'";
+         $sql = $this->db->query($query);
+   
+         foreach ($sql-> result_array() as $row){
+             $result[] = $row; 
+         }
+         return $result;
+      }
 
-   // avoir tpuis les cpmtes
+
+   // avoir TOUS les cpmtes
    public function get_all_comptes(){
 		$query = $this->db->get('compte_general');
-      return $query->result();;
+      return $query->result();
 	 }
+
+    public function get_account_numero(){
+      $query = sprintf("select numero_compte from compte_general");
+      $sql = $this->db->query($query);
+
+      foreach ($sql-> result_array() as $row){
+          $result[] = $row; 
+      }
+      return $result;
+   }
+
 
    // get compte by id
    public function get_compte_general_by_id($id_compte_general){
       $query = sprintf("select * from compte_general where id_compte_general = '%s'", $id_compte_general);
       $sql = $this->db->query($query);
-      $count = 0;
 
       foreach ($sql-> result_array() as $row){
-          $count++;
           $result[] = $row; 
       }
-      if($count == 0) return 0;
-      return $result[0];
+      if(count($result) > 0){
+         return $result[0];
+      }
+      
    }
 
    // Total debit et credit d'un compte
@@ -69,36 +124,35 @@ class Compte extends CI_Model {
       $values = $this -> get_grand_livre($id_compte_general);
       $debit = 0;
       $credit = 0;
-      foreach($values as $value){
-         $debit += (float) $value['debit'];
-         $credit += (float) $value['credit'];
+      if($values){
+         foreach($values as $value){
+            $debit += (float) $value['debit'];
+            $credit += (float) $value['credit'];
+         }
+         $result = array();
+         $result[] = $debit;
+         $result[] = $credit;
+         return $result;
       }
-      $result = array();
-      $result[] = $debit;
-      $result[] = $credit;
-      return $result;
    }
 
    // Get le grand livre des copmptes
    public function get_grand_livre($id_compte_general){
       $query = sprintf("select * from v_journal_content where id_compte_general = '%s' order by date_insertion", $id_compte_general);
       $sql = $this->db->query($query);
-      $count = 0;
 
       foreach ($sql-> result_array() as $row){
-          $count++;
           $result[] = $row; 
       }
-      if($count == 0) return 0;
       return $result;
    }
 
 
    // Toutes les racines
-	 public function get_racine_compte(){
-		$query = $this->db->get('racine_compte');
+	   public function get_racine_compte(){
+		   $query = $this->db->get('racine_compte');
         return $query->result();
-     }
+      }
    
      // Tous les comptes
      public function get_comptes(){
@@ -137,6 +191,7 @@ class Compte extends CI_Model {
 
      // Pour plusieurs produits, we need to llop all products
      public function repartition_products_charge($id_compte_general, $rep_charge){
+      if($rep_charge){
          foreach($rep_charge as $charge){
             $product = $charge[4];
             $rep_prod = $charge[0];
@@ -146,6 +201,7 @@ class Compte extends CI_Model {
 
             $this->repartition_one_product_charge($id_compte_general, $product, $rep_prod, $rep_prod_fixe, $rep_prod_variable, $rep_temp_charge);
          }
+      }  
      }
 
 

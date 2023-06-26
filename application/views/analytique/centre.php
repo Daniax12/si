@@ -16,7 +16,7 @@
                         <div class="page-breadcrumb">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link"> Etude analytique d'un produit </a></li>
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link"> Etude analytique d'un produit PAR CENTRE </a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><?php echo $the_product['nom_product'] ?></li>
                                 </ol>
                             </nav>
@@ -62,26 +62,25 @@
                                     <table class="table">
                                         <thead class="bg-light">
                                             <tr class="border-0">
-                                                <th class="border-0">Cout</th>
+                                                <th class="border-0">Centre</th>
                                                 <th class="border-0"> Valeur </th>
                                                 <th class="border-0"> Pourcentage </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="">
-                                                <td > Fixe </td>
-                                                <td class="text-right"> Ar <?php echo number_format($repartition[1][0], 2, ',', ' ')  ?></td>
-                                                <td class="text-right"> <?php echo $repartition[1][1] ?> % </td>
-                                            </tr>
-                                            <tr class="">
-                                                <td> Variable </td>
-                                                <td class="text-right"> Ar <?php echo number_format($repartition[2][0], 2, ',', ' ')  ?></td>
-                                                <td class="text-right">  <?php echo $repartition[2][1] ?> %</td>
-                                            </tr>
+                                            <?php if($repartition_centre){ 
+                                                foreach($repartition_centre as $repartition){ ?>
+                                                    <tr class="">
+                                                        <td > <?php echo $repartition[0] -> nom_centre ?> </td>
+                                                        <td class="text-right"> Ar <?php echo number_format($repartition[1], 2, ',', ' ')  ?></td>
+                                                        <td class="text-right"> <?php echo $repartition[2] ?> % </td>
+                                                    </tr>
+                                                <?php }
+                                            } ?>
                                         </tbody>
                                         <tfoot>
                                             <td class="text-right"> Total </td>
-                                            <td class="text-right">Ar <?php echo number_format($repartition[0], 2, ',', ' ')  ?></td>
+                                            <td class="text-right">Ar <?php echo number_format($charges, 2, ',', ' ')  ?></td>
                                             <td class="text-right"> 100.00 % </td>
                                         </tfoot>
                                     </table>
