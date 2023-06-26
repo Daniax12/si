@@ -105,7 +105,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href=""> 
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Compte_ctrl/balance_page/") ?>"> 
                                                 Balance
                                             </a>
                                         </li>
@@ -125,7 +125,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href=""> 
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Product_ctrl/repartition_charge_product_centre/") ?>"> 
                                                 Par centre
                                             </a>
                                         </li>
@@ -133,9 +133,23 @@
                                 </div>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="<?php echo site_url("index.php/Facture_ctrl/") ?>" ><i class="fa fa-fw fa-user-circle"></i>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-45" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
                                     Facturation
                                 </a>
+                                <div id="submenu-45" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#"> 
+                                                Fabriquer une facture
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Facture_ctrl/") ?>"> 
+                                                Liste des factures
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>

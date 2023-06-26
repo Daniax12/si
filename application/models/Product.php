@@ -23,13 +23,10 @@ class Product extends CI_Model {
      public function get_pu_by_unit($id_product, $id_unit){
         $query = sprintf("select price_unit from unity_price where id_product = '%s' AND id_unity = '%s' ", $id_product, $id_unit);
         $sql = $this->db->query($query);
-        $count = 0;
 
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result[0]['price_unit'];
      }
 
@@ -64,16 +61,13 @@ class Product extends CI_Model {
 
      // Prendre tous les produits dans charge_product
      public function get_product_charge_repartition($id_product){
-            $query = sprintf("select * from charge_product where id_product = '%s'", $id_product);
-            $sql = $this->db->query($query);
-            $count = 0;
+        $query = sprintf("select * from charge_product where id_product = '%s'", $id_product);
+        $sql = $this->db->query($query);
 
-            foreach ($sql-> result_array() as $row){
-                $count++;
-                $result[] = $row; 
-            }
-            if($count == 0) return 0;
-            return $result;
+        foreach ($sql-> result_array() as $row){
+            $result[] = $row; 
+        }
+        return $result;
      }
 	
     // tous les produits
@@ -86,14 +80,62 @@ class Product extends CI_Model {
     public function get_produit_by_id($id_product){
         $query = sprintf("select * from product where id_product = '%s'", $id_product);
         $sql = $this->db->query($query);
-        $count = 0;
 
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result[0];
     }
+
+    // Tous les produits avec prix unitaire de chaque unity
+    public function get_products_detailed(){
+        $all_product = $this -> get_products();
+        $result = array();
+
+        foreach($all_product as $product){
+            $temp_data = $this -> get_latest_product_price($product -> id_product);
+            if($temp_data){
+                $result[] = $temp_data;
+            }
+        }
+        return $result;
+    }
+
+    // Get last pricing of each product by unity
+    public function get_latest_product_price($id_product){
+        $all_prices = $this -> product_pricing_details($id_product);
+        $unities = $this -> get_unity();
+
+        if($unities){
+            $result = array();
+            if($all_prices){
+                for($i = 0; $i < count($unities); $i++){
+                    for($k = 0; $k < count($all_prices); $k++){
+                        if($all_prices[$k]['id_unity'] == $unities[$i] -> id_unity){
+                            $result[] = $all_prices[$k];
+                            break;
+                        }
+                    }
+                }
+            }
+            return $result;
+        }
+    }
+
+    // Get details of product_price
+    public function product_pricing_details($id_product){
+        $query = sprintf("select * from v_product_details where id_product = '%s'", $id_product);
+        $sql = $this->db->query($query);
+        foreach ($sql-> result_array() as $row){
+            $result[] = $row; 
+        }
+        return $result;
+    }
+
+    // Get all unity in the databse
+   public function get_unity(){
+        $query = $this->db->get('unity');
+        return $query->result();
+   } 
    
 }

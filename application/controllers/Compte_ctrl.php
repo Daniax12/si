@@ -8,6 +8,18 @@ class Compte_ctrl extends CI_Controller {
         $this->load->model('Compte');
     }
 
+    // balance
+    public function balance_page(){
+        $data['balances'] = $this -> Compte -> get_balance_comptes();
+        $data['total'] = $this -> Compte -> total_balance();
+        
+        $data['title'] = 'DIMPEX | Balance';
+		$data['title_page'] = 'Comptabilite';
+        $data['content'] = 'comptabilite/balance';
+
+        $this->load->view('main', $data);
+    }
+
     // Grand livre
     public function grand_livre_page(){
         if (isset($_GET['id_compte_general_input'])) {
@@ -46,8 +58,9 @@ class Compte_ctrl extends CI_Controller {
 		$data['title_page'] = 'Mon entreprise';
 		$data['title_section'] = 'Ajouter un compte general';
 		$data['content'] = 'company/ajout_compte_general';
+        $data['numeros'] = $this->Compte->get_account_numero();
         $data['racines'] = $this->Compte->get_racine_compte();
-        $data['comptes'] = $this->Compte->get_comptes();
+        $data['comptes'] = $this->Compte->get_account_numero();
 
         $this->load->model('Company');
         $data['products'] = $this->Company->get_products();

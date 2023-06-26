@@ -46,6 +46,7 @@
     <!-- morris js -->
     <script src="<?php echo base_url() ?>/assets/vendor/charts/morris-bundle/raphael.min.js"></script>
     <script src="<?php echo base_url() ?>/assets/vendor/charts/morris-bundle/morris.js"></script>
+    <script src="<?php echo base_url() ?>/assets/vendor/parsley/parsley.js"></script>
     <!-- chart c3 js -->
     <script src="<?php echo base_url() ?>/assets/libs/js/dashboard-ecommerce.js"></script>
     <script src="<?php echo base_url() ?>/assets/libs/js/main-js.js"></script>

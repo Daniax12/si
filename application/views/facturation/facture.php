@@ -46,24 +46,35 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead class="bg-light">
-                                            <tr class="border-0 text-center">
-                                                <th class="border-0">Id facture</th>
-                                                <th class="border-0"> Client </th>
+                                            <tr class="border-0">
+                                                <th class="border-0" style="width:15%">Id facture</th>
+                                                <th class="border-0" style="width:15%"> Client </th>
                                                 <th class="border-0"> Object   </th>
-                                                <th class="border-0"> Responsable  </th>
+                                                <th class="border-0"style="width:15%"> Responsable  </th>
                                                 <th class="border-0"> Montant total  </th>
+                                                <th class="border-0"> Etat </th>
+                                                <th> </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($factures as $facture){ ?>
-                                                <tr>
-                                                    <td><?php echo $facture -> id_facture ?></td>
-                                                    <td><?php echo $facture -> nom_entreprise ?></td>
-                                                    <td><?php echo $facture ->object_facture ?></td>
-                                                    <td><?php echo $facture-> responsable ?></td>
-                                                    <td class="text-right">Ar <?php echo ($facture -> totalht + $facture -> tva) ?></td>
-                                                </tr>
-                                            <?php } ?>
+                                            <?php 
+                                            if($factures){ 
+                                                foreach($factures as $facture){ ?>
+                                                    <tr>
+                                                        <td><?php echo $facture['id_facture'] ?></td>
+                                                        <td><?php echo $facture['nom_entreprise'] ?></td>
+                                                        <td><?php echo $facture['object_facture'] ?></td>
+                                                        <td><?php echo $facture['responsable'] ?></td>
+                                                        <td class="text-right"> Ar <?php echo ($facture['totalht'] + $facture['tva']) ?></td>
+                                                        <td> <i class="<?php echo $facture['valide_letter'] ?>"></i>  </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary">
+                                                                <a href="<?php echo site_url("index.php/Facture_ctrl/detailing_facture/") ?>/<?php echo $facture['id_facture'] ?>">...</a>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <?php } 
+                                            } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -73,17 +84,19 @@
                     <!-- ============================================================== -->
                     <div class="col-md-3">
                         <div class="card">
-                            <h5 class="card-header">Nos clients phares <?php var_dump($customers) ?></h5>
+                            <h5 class="card-header">Nos clients phares </h5>
                             <div class="card-body p-0">
                                 <ul class="country-sales list-group list-group-flush">
-                                    <?php foreach($clients as $client){ ?>
+                                    <?php 
+                                    if($clients){
+                                    foreach($clients as $client){ ?>
                                         <li class="list-group-item country-sales-content">
                                             <span class="mr-2"></span><?php echo $client['nom_entreprise'] ?>
                                             <span class="float-right text-dark">
                                                 Ar <?php echo $client['t'] ?>
                                             </span>
                                         </li>
-                                    <?php } ?>           
+                                    <?php } }?>           
                                 </ul>
                             </div>
                         </div>
@@ -101,28 +114,51 @@
                             </div>
 
                             <div class="modal-body text-center">
-                                <form action = "Generalite_ctrl/inserer_product" method="POST">
+                                <form action = "Facture-ctrl/inserer_product" method="POST">
+                                    <!-- DATE FACTURE -->
                                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
-                                        <label for="inputText1" class="col-form-label"> Ref/BC:  </label>
-                                        <input id="inputText1" type="text" name="bc" class="form-control" required>
+                                        <div class="d-flex flex-row">
+                                            <label for="inputText1" class="col-form-label" style="width: 30%"> Date:  </label>
+                                            <input id="inputText1" type="date" name="date_facture" class="form-control" required>
+                                        </div>
                                     </div>
+                                    <!-- REFERECENE BON DE COMMANDE -->
                                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
-                                        <label for="inputText1" class="col-form-label"> Object:  </label>
-                                        <input id="inputText1" type="text" name="object_facrure" class="form-control" required>
+                                        <div class="d-flex flex-row">
+                                            <label for="inputText1" class="col-form-label" style="width: 30%"> Ref/BC:  </label>
+                                            <input id="inputText1" type="text" name="bc" class="form-control" required>
+                                        </div>
                                     </div>
+                                    <!-- OBJECT DE LA FACTURE -->
                                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
-                                        <label for="input-select">  Nos clients : </label>
-                                        <select class="form-control" id="input-select_racine">
-                                            <?php  foreach($customers as $customer){ ?>
-                                                <option value="<?php echo $customer -> id_tiers ?>">
-                                                    <?php echo $customer -> nom_entreprise ?>
-                                                </option>
-                                            <?php } ?>     
-                                        </select>
+                                        <div class="d-flex flex-row">
+                                            <label for="inputText1" class="col-form-label" style="width: 30%"> Object:  </label>
+                                            <input id="inputText1" type="text" name="object_facture" class="form-control" required>
+                                        </div>
                                     </div>
+                                    <!-- CLIENTS -->
                                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
-                                        <label for="inputText1" class="col-form-label"> Date:  </label>
-                                        <input id="inputText1" type="date" name="date_facture" class="form-control" required>
+                                        <div class="d-flex flex-row">
+                                            <label for="input-select" style="width: 30%">  Nos clients : </label>
+                                            <select class="form-control" id="input-select_racine" name="tiers_id">
+                                                <option value=""></option>
+                                                <?php  
+                                                if($customers){ 
+                                                    foreach($customers as $customer){ ?>
+                                                        <option value="<?php echo $customer['id_tiers'] ?>">
+                                                            <?php echo $customer['nom_entreprise'] ?>
+                                                        </option>
+                                                    <?php } 
+                                                } ?>     
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <!-- ACCOMPTE -->
+                                     <div class="form-group border border-2" style="padding: 2% 2% 2% 2%">
+                                        <div class="d-flex flex-row">
+                                            <label for="inputText1" class="col-form-label" style="width: 30%"> Accompte:  </label>
+                                            <input id="inputText1" type="number" name="accompte" class="form-control" required>
+                                        </div>
                                     </div>
                                     <input type="submit" value = "Ajouter" class="btn btn-primary">
                                 </form>

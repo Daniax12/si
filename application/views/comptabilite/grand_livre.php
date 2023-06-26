@@ -68,16 +68,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach($livres as $livre){ ?>
-                                                <tr class="text-center">
-                                                    <td><?php echo $livre['date_insertion']  ?></td>
-                                                    <td><?php echo $livre['ref_piece']  ?></td>
-                                                    <td><?php echo $livre['intitule_tiers']  ?></td>
-                                                    <td><?php echo $livre['libelle']  ?></td>
-                                                    <td class="text-right"> Ar <?php echo $livre['debit']  ?></td>
-                                                    <td class="text-right"> Ar <?php echo $livre['credit']  ?></td>
-                                                </tr>
-                                            <?php } ?>
+                                            <?php 
+                                            if($livres){            
+                                                foreach($livres as $livre){ ?>
+                                                    <tr class="text-center">
+                                                        <td><?php echo $livre['date_insertion']  ?></td>
+                                                        <td><?php echo $livre['ref_piece']  ?></td>
+                                                        <td><?php echo $livre['intitule_tiers']  ?></td>
+                                                        <td><?php echo $livre['libelle']  ?></td>
+                                                        <td class="text-right"> Ar <?php echo $livre['debit']  ?></td>
+                                                        <td class="text-right"> Ar <?php echo $livre['credit']  ?></td>
+                                                    </tr>
+                                                <?php } 
+                                            }?>
                                         </tbody>
                                         <tfoot>
                                             <td colspan=4 class="text-right"> Total </td>

@@ -21,13 +21,24 @@ class Facture extends CI_Model {
 
          // tous les factures avec ses details
 	public function get_factures(){
-        $query = $this->db->get('v_facture_definition');
-        return $query->result();
+        $query = "select * from v_facture_definition";
+        $sql = $this->db->query($query);
+        $valide_letter = "";
+        foreach ($sql-> result_array() as $row){
+            if($row['valide'] == 0){
+                $valide_letter = "fa fa-check";
+            } else if($row['valide'] == 1){
+                $valide_letter = "fa fa-adjust";
+            }
+            $row['valide_letter'] = $valide_letter;
+            $result[] = $row; 
+        }
+        return $result;
     }
 
     // SUBMITTIMG
     public function submit_facture($id_facture){
-        $facture = $this -> factures_by_id($id_facture);
+        $facture = $this -> facture_by_id($id_facture);
         $facture_details = $this -> get_child_facture($id_facture);
         $this-> update_before_submit($id_facture);
         $this -> load-> model('Journal');
@@ -46,7 +57,7 @@ class Facture extends CI_Model {
     }
 
     public function update_before_submit($id_facture){
-        $facture = $this -> factures_by_id($id_facture);
+        $facture = $this -> facture_by_id($id_facture);
         $this-> load->model('Product');
         $data_factures = $this->get_child_facture($id_facture);
         $tva = 0;
@@ -68,30 +79,22 @@ class Facture extends CI_Model {
 
     // CLIENT PHARE
     public function get_phare_customers(){
-            $query = sprintf("select nom_entreprise, sum(totalht) as t from v_facture_definition group by id_tiers, nom_entreprise order by t desc");
-            $sql = $this->db->query($query);
-            $count = 0;
-
-            foreach ($sql-> result_array() as $row){
-                $count++;
-                $result[] = $row; 
-            }
-            if($count == 0) return 0;
-            return $result;
+        $query = sprintf("select nom_entreprise, sum(totalht) as t from v_facture_definition group by id_tiers, nom_entreprise order by t desc");
+        $sql = $this->db->query($query);
+        
+        foreach ($sql-> result_array() as $row){    
+            $result[] = $row; 
+        }
+        return $result;
     }
-
 
     // Montant
     public function factures_between_montant($montant1, $montant2){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE totalHT >= %u AND totalHT <= %u", $montant1, $montant2);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -99,13 +102,9 @@ class Facture extends CI_Model {
     public function factures_between_dates($date_debut, $date_fin){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE date_insertion >= '%s' AND date_insertion <= '%s'", $date_debut, $date_fin);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -115,13 +114,9 @@ class Facture extends CI_Model {
     public function  factures_by_object($object){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE object_facture LIKE '%%%s%%'", $object);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -129,13 +124,9 @@ class Facture extends CI_Model {
     public function factures_by_nom_entreprise($nom_entreprise){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE nom_entreprise LIKE '%%%s%%'", $nom_entreprise);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -143,13 +134,9 @@ class Facture extends CI_Model {
     public function factures_by_date($date){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE date_insertion LIKE '%s'", $date);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -157,31 +144,32 @@ class Facture extends CI_Model {
     public function factures_by_world($id_world){
         $query = sprintf("SELECT * FROM v_facture_definition WHERE id_facture LIKE '%%%s%%'", $id_world);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
     // par id litterallty
-    public function factures_by_id($id){
-        $query = sprintf("SELECT * FROM v_facture_definition WHERE id_facture = '%s'", $id_world);
-        $sql = $this->db->query($query);
-        $count = 0;
-
-        foreach ($sql-> result_array() as $row){
-            $count++;
+    public function facture_by_id($id){
+        $query = sprintf("SELECT * FROM v_facture_definition WHERE id_facture = '%s'", $id);
+        $sql = $this->db->query($query);    
+        $valide_letter = "";    
+        foreach ($sql-> result_array() as $row){ 
+            if($row['valide'] == 0){
+                $valide_letter = "VALIDE";
+            } else if($row['valide'] == 1){
+                $valide_letter = "MODIFIABLE";
+            }
+            $row['valide_letter'] = $valide_letter;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
-        return $result[0];
+        if($result && count($result) > 0){
+            return $result[0];
+        }
     }
 
-    // Supprimer definitivemnent hatran amn xananay na misy aa
+    // Supprimer definitivemnent hatran amn zanany ra misy aa
     public function delete_main_facture($id_facture){
 
         $child = $this-> get_child_facture($id_facture);
@@ -196,15 +184,11 @@ class Facture extends CI_Model {
 
     // predndre tous les facturs filles d'une facture
     public function get_child_facture($id_facture){
-        $query = sprintf("select * from v_facture_liste where id_facture = '%s'", $id_product);
+        $query = sprintf("select * from v_facture_liste where id_facture = '%s'", $id_facture);
         $sql = $this->db->query($query);
-        $count = 0;
-
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        if($count == 0) return 0;
         return $result;
     }
 
@@ -215,7 +199,7 @@ class Facture extends CI_Model {
     }
 
     //creer nouvelle facture
-    public function create_function($date, $id_tiers, $ref_bc, $objet, $accompte){
+    public function create_facture($date, $id_tiers, $ref_bc, $objet, $accompte){
         $query = sprintf("INSERT INTO facture VALUES('DPX/'|| (SELECT EXTRACT(MONTH FROM CURRENT_DATE))||'/'|| (SELECT EXTRACT(YEAR FROM CURRENT_DATE))||'/00'||(SELECT NEXTVAL('facture_seq')),'%s', '%s', '%s', '%s', %u, 1) returning id_facture", $date, $id_tiers, $ref_bc, $objet, $accompte);       // Insert objet
         $result = $this->db->query($query)->row_array();
 
@@ -223,8 +207,18 @@ class Facture extends CI_Model {
     }
  
     // ajouter des listes de porduits
-    public function add_content_facture($id_facture, $id_product, $id_unity, $qty, $pu){
-        $query = sprintf("INSERT INTO facture_details VALUES('FD' || (SELECT NEXTVAL('facture_details_seq')), '%s', '%s', '%s', %u, %u)", $id_facture, $id_product, $id_unity, $qty, $pu);       // Insert objet
+    public function add_content_facture($id_facture, $id_product, $id_unity, $qty){
+        $this -> load -> model('Product');
+        $product_detail = $this -> Product -> get_latest_product_price($id_product);
+        foreach($product_detail as $detail){
+            if($id_product == $detail['id_product'] && $id_unity == $detail['id_unity']){
+                $pu = $detail['price_unit'];
+            }
+        }
+
+        $ht = $pu * $qty;
+
+        $query = sprintf("INSERT INTO facture_details VALUES('FD' || (SELECT NEXTVAL('facture_details_seq')), '%s', '%s', '%s', %u, %u, %u)", $id_facture, $id_product, $id_unity, $qty, $pu, $ht);       // Insert objet
         $sql = $this->db->query($query);
     }
     
