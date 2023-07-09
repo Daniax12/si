@@ -64,8 +64,8 @@
                                                     <td><?php echo $ecriture['ref_piece']  ?></td>
                                                     <td><?php echo $ecriture['intitule_tiers'] ?></td>
                                                     <td><?php echo $ecriture['libelle'] ?></td>
-                                                    <td class="text-right">Ar  <?php echo $ecriture['debit'] ?></td>
-                                                    <td class="text-right">Ar <?php echo $ecriture['credit'] ?></td>
+                                                    <td class="text-right">Ar  <?php echo number_format($ecriture['debit'], 2, ',', ' ') ?></td>
+                                                    <td class="text-right">Ar <?php echo number_format($ecriture['credit'], 2, ',', ' ') ?></td>
                                                 </tr>
                                             <?php } 
                                         }?>

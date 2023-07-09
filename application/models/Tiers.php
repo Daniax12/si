@@ -5,7 +5,7 @@ class Tiers extends CI_Model {
 
   // Liste des tiers
     public function get_all_tiers(){
-		$query = $this->db->get('v_tiers_compte_general');
+		  $query = $this->db->get('v_tiers_compte_general');
         return $query->result();
      }
 
@@ -18,13 +18,10 @@ class Tiers extends CI_Model {
     public function get_classe_supplier(){
       $query = "select * from compte_general where numero_compte like '401%'";
       $sql = $this->db->query($query);
-      $count = 0;
-
+      $result = array();
       foreach ($sql-> result_array() as $row){
-          $count++;
           $result[] = $row; 
       }
-      //if($count == 0) return 0;
       return $result;
     }
     
@@ -32,26 +29,32 @@ class Tiers extends CI_Model {
     public function get_classe_customer(){
         $query = "select * from compte_general where numero_compte like '411%'";
         $sql = $this->db->query($query);
-        $count = 0;
-
+        $result = array();
         foreach ($sql-> result_array() as $row){
-            $count++;
             $result[] = $row; 
         }
-        //if($count == 0) return 0;
         return $result;
     } 
 
     public function get_classe_tiers(){
       $query = "select * from compte_general where numero_compte like '40%' or numero_compte like '41%'";
       $sql = $this->db->query($query);
-      $count = 0;
-
+      $result = array();
       foreach ($sql-> result_array() as $row){
-          $count++;
           $result[] = $row; 
       }
-      //if($count == 0) return 0;
       return $result;
-  } 
+    }
+    
+    public function get_tiers_by_id($id_tiers){
+      $query = sprintf("select * from tiers where id_tiers = '%s'", $id_tiers);
+      $sql = $this->db->query($query);
+      $result = array();
+      foreach ($sql-> result_array() as $row){
+          $result[] = $row; 
+      }
+      if($result && count($result) > 0){
+          return $result[0];
+      }
+    }
 }

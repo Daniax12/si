@@ -64,8 +64,8 @@
                                                     <td><?php echo $journal['ref_piece']  ?></td>
                                                     <td><?php echo $content['intitule_tiers'] ?></td>
                                                     <td><?php echo $content['libelle'] ?></td>
-                                                    <td class="text-right">Ar  <?php echo $content['debit'] ?></td>
-                                                    <td class="text-right">Ar <?php echo $content['credit'] ?></td>
+                                                    <td class="text-right">Ar  <?php echo number_format($content['debit'], 2, ',', ' ') ?></td>
+                                                    <td class="text-right">Ar <?php echo number_format($content['credit'], 2, ',', ' ') ?></td>
                                                 </tr>
                                             <?php } 
                                         } ?>

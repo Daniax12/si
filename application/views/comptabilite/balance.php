@@ -49,16 +49,16 @@
                                                     <tr class="">
                                                         <td><?php echo $balance[0] ->numero_compte  ?></td>
                                                         <td><?php echo $balance[0] -> intitule  ?></td>
-                                                        <td class="text-right"> Ar <?php echo $balance[1]  ?></td>
-                                                        <td class="text-right"> Ar <?php echo $balance[2]  ?></td>
+                                                        <td class="text-right"> Ar <?php echo number_format($balance[1], 2, ',', ' ')  ?></td>
+                                                        <td class="text-right"> Ar <?php echo number_format($balance[2], 2, ',', ' ')  ?></td>
                                                     </tr>
                                                 <?php } 
                                             }?>
                                         </tbody>
                                         <tfoot class="font-weight-bold">
                                             <td colspan=2 class="text-right font-weight-bold"> Total </td>
-                                            <td class="text-right font-weight-bold">Ar <?php echo $total[0] ?></td>
-                                            <td class="text-right font-weight-bold"> Ar <?php echo $total[1] ?> </td>
+                                            <td class="text-right font-weight-bold">Ar <?php echo number_format($total[0], 2, ',', ' ') ?></td>
+                                            <td class="text-right font-weight-bold"> Ar <?php echo number_format($total[1], 2, ',', ' ') ?> </td>
                                         </tfoot>
                                     </table>
                                 </div>
