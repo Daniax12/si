@@ -38,7 +38,8 @@ class Generalite_ctrl extends CI_Controller {
 		$data['title'] = 'DIMPEX | Home';
 		$data['title_page'] = 'Mon entreprise';
 		$data['title_section'] = 'Generalite';
-		$data['content'] = 'company/generalite';
+		// $data['content'] = 'company/generalite';
+		$data['content'] = 'pdf';
 		$data['company'] = $this->Company->get_detail_company();
 		$data['products'] = $this->Company->get_products();
 		$data['centers'] = $this->Company->get_centers();

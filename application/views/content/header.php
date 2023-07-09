@@ -94,7 +94,7 @@
                             </li>
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-8"><i class="fas fa fa-balance-scale"></i>
                                     General
                                 </a>
                                 <div id="submenu-9" class="collapse submenu" style="">
@@ -114,7 +114,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-8"><i class="fas fa fa-crop"></i>
                                     Analytique
                                 </a>
                                 <div id="submenu-10" class="collapse submenu" style="">
@@ -132,17 +132,33 @@
                                     </ul>
                                 </div>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-96" aria-controls="submenu-8"><i class="fa fa-briefcase"></i>
+                                    Seuil de rentabilite
+                                </a>
+                                <div id="submenu-96" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Product_ctrl/repartition_charge_product/") ?>"> 
+                                                Actuel seuil
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="<?php echo site_url("index.php/Product_ctrl/repartition_charge_product_centre/") ?>"> 
+                                                Simuler seuil
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
                             <li class="nav-item ">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-45" aria-controls="submenu-8"><i class="fas fa-fw fa-columns"></i>
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-45" aria-controls="submenu-8"><i class="fa fa-barcode"></i>
                                     Facturation
                                 </a>
                                 <div id="submenu-45" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#"> 
-                                                Fabriquer une facture
-                                            </a>
-                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="<?php echo site_url("index.php/Facture_ctrl/") ?>"> 
                                                 Liste des factures

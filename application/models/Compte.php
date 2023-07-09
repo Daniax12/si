@@ -116,7 +116,6 @@ class Compte extends CI_Model {
       if(count($result) > 0){
          return $result[0];
       }
-      
    }
 
    // Total debit et credit d'un compte
@@ -140,7 +139,7 @@ class Compte extends CI_Model {
    public function get_grand_livre($id_compte_general){
       $query = sprintf("select * from v_journal_content where id_compte_general = '%s' order by date_insertion", $id_compte_general);
       $sql = $this->db->query($query);
-
+      $result = array();
       foreach ($sql-> result_array() as $row){
           $result[] = $row; 
       }

@@ -32,7 +32,7 @@
                     <div class="d-flex flex-row">
                         <form action = "<?php echo site_url("index.php/Compte_ctrl/grand_livre_page") ?>" method="GET">
                             <div class="d-flex flex-row align-items-center">
-                                <div class="form-group">
+                                <div class="form-group d-flex flex-row align-items-center">
                                     <select class="form-control" name="id_compte_general_input" id="input-select_racine" placeholder="Rechercher">
                                         <option value=""></option>
                                         <?php  foreach($comptes_generaux as $compte_general){ ?>
@@ -41,9 +41,7 @@
                                             </option>
                                         <?php } ?>     
                                     </select>
-                                </div>
-                                <div style="margin-left:20px">
-                                    <button type="submit" class="btn btn-sm btn-primary">
+                                    <button style="margin-left: 2%" type="submit" class="btn btn-sm btn-primary">
                                         Rechercher
                                     </button>
                                 </div>
@@ -76,16 +74,16 @@
                                                         <td><?php echo $livre['ref_piece']  ?></td>
                                                         <td><?php echo $livre['intitule_tiers']  ?></td>
                                                         <td><?php echo $livre['libelle']  ?></td>
-                                                        <td class="text-right"> Ar <?php echo $livre['debit']  ?></td>
-                                                        <td class="text-right"> Ar <?php echo $livre['credit']  ?></td>
+                                                        <td class="text-right"> Ar <?php echo number_format($livre['debit'], 2, ',', ' ')   ?></td>
+                                                        <td class="text-right"> Ar <?php echo number_format($livre['credit'], 2, ',', ' ')   ?></td>
                                                     </tr>
                                                 <?php } 
                                             }?>
                                         </tbody>
                                         <tfoot>
                                             <td colspan=4 class="text-right"> Total </td>
-                                            <td class="text-right">Ar <?php echo $balance[0] ?></td>
-                                            <td class="text-right"> Ar <?php echo $balance[1] ?> </td>
+                                            <td class="text-right">Ar <?php echo number_format($balance[0], 2, ',', ' ') ?></td>
+                                            <td class="text-right"> Ar <?php echo number_format($balance[1], 2, ',', ' ') ?> </td>
                                         </tfoot>
                                     </table>
                                 </div>
